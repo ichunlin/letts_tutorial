@@ -18,7 +18,6 @@ def profiles_list(request, format=None):
 
 @api_view(['POST'])
 def add_profiles(request, format=None):
-    print(request.data)
     serializer = ProfileModelSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save() 

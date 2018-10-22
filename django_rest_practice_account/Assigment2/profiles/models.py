@@ -11,7 +11,7 @@ STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
 # Create your models here.
 class loginModel(models.Model):
     email = models.EmailField(max_length=400, blank=False)
-    password = models.CharField(max_length=100, blank=False, default='')
+    password = models.CharField(max_length=100, blank=False)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     class Meta:
@@ -20,12 +20,19 @@ class loginModel(models.Model):
 # Create your models here.
 class ProfileModel(models.Model):
     #ProfileModel {first_name, last_name, email, phoneNo)
-    email = models.EmailField(max_length=400, blank=False)
-    first_name = models.CharField(max_length=100, blank=False, default='')
-    last_name = models.CharField(max_length=100, blank=False, default='')
+    #r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+    email = models.EmailField(max_length=400, blank=False, 
+    validators=[
+            RegexValidator(
+                regex='(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)',
+                message='incorrect email address',
+            ),
+        ])
+    first_name = models.CharField(max_length=100, blank=False) 
+    last_name = models.CharField(max_length=100, blank=False)
     #"^[0-9]{10}$"
     #phoneNo = RegexField(regex=r'^[0-9]{10}$')
-    phoneNo = models.CharField(max_length=10, blank=False, default='',
+    phoneNo = models.CharField(max_length=10, blank=False, 
     validators=[
             RegexValidator(
                 regex='^[0-9]{10}$',
